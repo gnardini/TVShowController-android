@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import com.gnardini.tvshowcontroller.R
@@ -12,7 +14,9 @@ import com.gnardini.tvshowcontroller.animation.ControlsAnimationManager
 import com.gnardini.tvshowcontroller.extensions.addTextWatcher
 import com.gnardini.tvshowcontroller.extensions.setClickListener
 import com.gnardini.tvshowcontroller.extensions.showToast
+import com.gnardini.tvshowcontroller.extensions.startActivity
 import com.gnardini.tvshowcontroller.kotterknife.bindView
+import com.gnardini.tvshowcontroller.mouse_movement.MouseActivity
 import com.gnardini.tvshowcontroller.utils.KeyboardUtils
 import retrofit2.Call
 import retrofit2.Callback
@@ -104,6 +108,19 @@ class DirectoriesActivity : AppCompatActivity() {
 
     private fun refreshServerIp() {
         commonInjector.retrofitServices.refresh()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.directory_menu_items, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val itemId = item?.itemId ?: -1
+        when (itemId) {
+        R.id.menu_mouse -> startActivity(MouseActivity::class.java)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
